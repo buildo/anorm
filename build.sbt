@@ -62,3 +62,7 @@ lazy val docs = project
   .dependsOn(anorm)
 
 playBuildRepoName in ThisBuild := "anorm"
+
+bintrayOrganization := Some("buildo")
+
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
