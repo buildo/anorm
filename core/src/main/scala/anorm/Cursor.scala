@@ -56,6 +56,12 @@ object Cursor {
   /** Creates cursor after the first one, as meta data is already known. */
   private def apply(rs: ResultSet, meta: MetaData, columns: List[Int]): Option[Cursor] = if (!rs.next) None else Some(new Cursor {
     val row = ResultRow(meta, columns.map(rs.getObject(_)))
+
+    val fetchCount = rs.getRow
+    val fetchSize = rs.getFetchSize
+    if (fetchCount == 2 * fetchSize)
+      rs.setFetchSize(fetchCount)
+
     def next = apply(rs, meta, columns)
   })
 
